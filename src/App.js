@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Toolbar from './Components/Toolbar'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className="navbar navbar-default" role="navigation">
+ <div className="container">
+   <div className="navbar-header">
+     <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+       <span className="sr-only">Toggle navigation</span>
+       <span className="icon-bar"></span>
+       <span className="icon-bar"></span>
+       <span className="icon-bar"></span>
+     </button>
+     <a className="navbar-brand" href="/">Inbox Styleguide</a>
+   </div>
+   <div className="collapse navbar-collapse">
+     <ul className="nav navbar-nav">
+       <li><a href="/">Components</a></li>
+       <li><a href="/example">Example</a></li>
+       <li><a href="/css">CSS</a></li>
+         <li><a href="/seeds">Seeds</a></li>
+     </ul>
+   </div>
+ </div>
+</div>
+  <Toolbar />
       </div>
     );
   }
