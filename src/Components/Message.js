@@ -2,15 +2,22 @@ import React from 'react'
 
 const Message = ({message, toggleRead, toggleCheck,labelsAppear, toggleStar}) => {
   let selected=""
+  let read =''
+  const box = ''
   const readClass = message.read ? 'read' : 'unread';
   const selectedClass= message.selected ? 'selected':'';
   const labelClass= message.labels ? 'label' : '';
   const starClass = message.starred ? 'fa fa-star-o':'fa fa-star'
+
   if(message.selected===true){
+
     selected = "selected"
   }
+  if(message.read ===true){
+    read = 'read'
+  }
   return(
-  <div className={`row message ${readClass} ${selectedClass} `} onClick={()=>{toggleRead(message)}}>
+  <div className={`row message ${readClass} ${selectedClass} `}  checked={`${read}`} >
   <div className="col-xs-1">
     <div className="row">
       <div className='col-xs-2' >

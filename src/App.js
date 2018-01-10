@@ -3,7 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 import Toolbar from './Components/Toolbar'
 import MessagesList from './Components/MessagesList'
-var allSelected = true
+var allSelected = false
+var read = false
+
 class App extends Component {
   constructor(props){
     super(props)
@@ -11,18 +13,24 @@ class App extends Component {
     messages:this.props.messages
     }
   }
-  toggleRead = (message) => {
-    const index = this.state.messages.indexOf(message);
-    let readMessages = this.state.messages.slice(0);
-    readMessages[index].read = !readMessages[index].read;
-    this.setState({messages:readMessages})
+  checkForNone = () => {
+    var checked = false
+    let selectedMessages = this.state.messages.slice(0);
+    let denied = selectedMessages.filter(message =>{
+      if(message.selected){
+        return message
+      }
+    })
+    return denied
   }
+
   toggleCheck = (message,class1)=> {
     class1.stopPropagation();
     const index = this.state.messages.indexOf(message);
     let selectedMessages = this.state.messages.slice(0);
     selectedMessages[index].selected = !selectedMessages[index].selected;
     this.setState({messages:selectedMessages})
+
   }
   labelsAppear =(message) => {
     const index = this.state.messages.indexOf(message);
@@ -39,13 +47,13 @@ class App extends Component {
   }
   selectAll =() =>{
     let selectedMessages = this.state.messages.slice(0);
-    if(allSelected === true){
+    if(allSelected === false){
       console.log('out here')
       selectedMessages.map(mess => {
         mess.selected = true
         this.setState({messages:selectedMessages})
       })
-      allSelected = false
+      allSelected =true
       console.log(allSelected)
     }
     else{
@@ -53,9 +61,91 @@ class App extends Component {
         mess.selected = false
         this.setState({messages:selectedMessages})
       })
-      allSelected = true
+      allSelected = false
     }
   }
+
+  readAll=(message)=>{
+      const index = this.state.messages.indexOf(message);
+    let newMessages = this.state.messages.slice(0);
+    newMessages.map(mess =>{
+    if(mess.selected === true){
+        mess.read=true
+      }
+    })
+    this.setState({messages:newMessages})
+  }
+  unReadAll = (message)=>{
+    const index = this.state.messages.indexOf(message);
+  let newMessages = this.state.messages.slice(0);
+  newMessages.map(mess =>{
+  if(mess.selected === true){
+      mess.read=false
+      mess.checked = false
+    }
+  })
+  this.setState({messages:newMessages})
+  }
+  deleteAll=(message)=>{
+    let trash = []
+    const index= this.state.messages.indexOf(message);
+    let selectedMessages = this.state.messages.slice(0);
+    selectedMessages.map(mess =>{
+      if(!mess.selected===true){
+        trash.push(mess)
+      }
+    })
+    this.setState({messages:trash})
+  }
+  addLabels= (e) =>{
+    e.preventDefault()
+
+    // const index= this.state.messages.indexOf(e);
+    let present = false;
+    let selectedMessages = this.state.messages.slice(0);
+    selectedMessages.map(mess =>{
+      if(mess.selected ===true){
+        mess.labels.map(messy =>{
+          if(messy === e.target.value){
+            present = true
+          }
+        })
+        if(!present){
+          console.log(mess)
+          mess.labels.push(e.target.value)
+        }
+      }
+      })
+      this.setState({messages:selectedMessages})
+      e.target.value = 'Apply label'
+  }
+  removeLabels = (e)=>{
+    let array = []
+    let selectedMessages = this.state.messages.slice(0);
+      selectedMessages.map(message=>{
+        if(message.selected===true){
+        message.labels.map(label=>{
+          if(label ===e.target.value){
+            console.log('suhhhhhhh')
+          message.labels.splice(message.labels.indexOf(label),1)
+        }
+        })}
+    })
+    this.setState({messages:selectedMessages})
+    e.target.value = 'Remove label'
+  }
+  unReadMessages=()=>{
+    let unreadMessages = this.state.messages.slice(0);
+    let count =  unreadMessages.filter(message=>{
+      if(message.read === false){
+        return message
+      }
+    })
+
+    return count
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -81,8 +171,8 @@ class App extends Component {
  </div>
 </div>
   <div className= 'container'>
-    <Toolbar selectAll={this.selectAll}/>
-    <MessagesList messages = {this.state.messages} toggleRead = {this.toggleRead} toggleCheck = {this.toggleCheck} labelsAppear= {this.labelsAppear} toggleStar = {this.toggleStar}  />
+    <Toolbar selectAll={this.selectAll}  readAll={this.readAll} unReadAll={this.unReadAll} deleteAll={this.deleteAll} addLabels={this.addLabels} unReadMessages={this.unReadMessages} checkForNone={this.checkForNone} removeLabels={this.removeLabels} message={this.state.messages}/>
+    <MessagesList messages = {this.state.messages}  toggleCheck = {this.toggleCheck} labelsAppear= {this.labelsAppear} toggleStar = {this.toggleStar} readAll={this.readAll} />
   </div>
       </div>
     );
