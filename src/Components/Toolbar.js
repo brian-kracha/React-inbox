@@ -29,6 +29,9 @@ else if(all.length > 0 && all.length < message.length){
       <span className="badge badge" >{unReadClass.length}</span>
       unread messages
     </p>
+    <button className={`btn color-red btn-default`} onClick={()=>{selectAll()}} >
+      <i className={`fa fa-add`}></i>
+    </button>
 
     <button className={`btn btn-default`} onClick={()=>{selectAll()}} >
       <i className={`fa ${square}`}></i>

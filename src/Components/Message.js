@@ -4,6 +4,7 @@ const Message = ({message, toggleRead, toggleCheck,labelsAppear, toggleStar}) =>
   let selected=""
   let read =''
   const box = ''
+
   const readClass = message.read ? 'read' : 'unread';
   const selectedClass= message.selected ? 'selected':'';
   const labelClass= message.labels ? 'label' : '';
@@ -24,7 +25,7 @@ const Message = ({message, toggleRead, toggleCheck,labelsAppear, toggleStar}) =>
         <input type='checkbox' checked={`${selected}`}  onClick={(class1)=>{toggleCheck(message,class1)}}/>
       </div>
       <div className="col-xs-2">
-        <i className={`${starClass}`} onClick={(e)=>{toggleStar(message,e)}}></i>
+        <i className={`${starClass}`}  onClick={(e)=>{toggleStar(message)}}></i>
       </div>
     </div>
   </div>
