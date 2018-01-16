@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 import Toolbar from './Components/Toolbar'
 import MessagesList from './Components/MessagesList'
 import Compose from './Components/Compose'
@@ -34,38 +39,37 @@ class App extends Component {
         }
       })
         const newMessage = await response.json()
-        this.setState({messages:[...this.state.messages, newMessage]})
+            this.setState({messages:[...this.state.messages, newMessage]})
+            }
+
+    toggleRead= async (e)=>{
+
+      let message = this.state.messages.slice(0)
+      message.map(mess =>{
+        if(mess.id ===Number(e.target.id)){
+          mess.read=true
+          console.log('here')
+        }
+      })
+      this.setState({messages:message})
+      let obj ={
+      "messageIds": [Number(e.target.id)],
+      "command": "read",
+      "read": true
+      }
+
+      const response = await fetch(`${localHost}/api/messages`, {
+          method: 'PATCH',
+          body: JSON.stringify(obj
+          ),headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        })
+
+
     }
-//     // toggleStar = async fetch()=>(`${localHost}/api/messages`,{
-//       method:'PATCH',
-//       body:JSON.stringify({
-//         starred:message.starred
-//         }),
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Accept': 'application/json'
-//         }
-//   }
-//   await let message= body.state.messages
-//   await let class =message.state
-// }
-  // serveStar= async(message =>{
-  //   const starSelected = await response.json();
-  //   const starState =[this.state.messages,starSelected]
-  //   const response =await fetch(`${localHost}/api/messages`,{
-  //     method:'PATCH',
-  //     body:JSON.stringify({
-  //       starred:message.starred
-  //       }),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Accept': 'application/json'
-  //       }
-  //   })
-  //
-  //
-  //   this.setState({messages:starState})
-  // }
+
 
   checkForNone = () => {
     var checked = false
@@ -284,10 +288,8 @@ class App extends Component {
            }
      })
   }
-  unReadMessages=async()=>{
+  unReadMessages=()=>{
     let unreadMessages = this.state.messages.slice(0);
-
-
     let count =  unreadMessages.filter(message=>{
       if(message.read === false){
         return message
@@ -323,9 +325,33 @@ class App extends Component {
  </div>
 </div>
   <div className= 'container'>
-    <Toolbar selectAll={this.selectAll}  readAll={this.readAll} unReadAll={this.unReadAll} deleteAll={this.deleteAll} addLabels={this.addLabels} unReadMessages={this.unReadMessages} checkForNone={this.checkForNone} removeLabels={this.removeLabels} message={this.state.messages}/>
-    <Compose createMessage={this.createMessage}/>
-    <MessagesList messages = {this.state.messages}  toggleCheck = {this.toggleCheck} labelsAppear= {this.labelsAppear} toggleStar = {this.toggleStar} readAll={this.readAll} serveStar={this.serveStar} />
+    <Toolbar selectAll={this.selectAll}
+     readAll={this.readAll}
+     unReadAll={this.unReadAll}
+     deleteAll={this.deleteAll}
+     addLabels={this.addLabels}
+      unReadMessages={this.unReadMessages}
+       checkForNone={this.checkForNone}
+       removeLabels={this.removeLabels}
+       message={this.state.messages}
+       />
+      <Route
+      path="/Compose"
+      render={() => (
+        <Compose createMessage={this.createMessage}/>
+        )}
+      />
+
+
+    <MessagesList
+    messages = {this.state.messages}
+     toggleCheck = {this.toggleCheck}
+     labelsAppear= {this.labelsAppear}
+      toggleStar = {this.toggleStar}
+       toggleRead={this.toggleRead}
+        readAll={this.readAll}
+        serveStar={this.serveStar}
+         />
   </div>
       </div>
     );

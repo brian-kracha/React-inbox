@@ -1,7 +1,6 @@
 import React from 'react'
 import Message from './Message'
 const MessagesList = ({messages, toggleRead, toggleCheck,labelsAppear,toggleStar}) => {
-  console.log(toggleStar);
   return (
     <div>
       {messages.map(message =>{

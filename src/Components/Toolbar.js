@@ -1,5 +1,10 @@
 import React from 'react'
-
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom'
 
 const Toolbar = ({ message, selectAll, readAll,unReadAll, deleteAll, addLabels,unReadMessages,checkForNone, removeLabels}) => {
   // const selectAllClass = Toolbar.selected ? 'fa fa-check-square-o' :'btn btn-default'
@@ -29,10 +34,18 @@ else if(all.length > 0 && all.length < message.length){
       <span className="badge badge" >{unReadClass.length}</span>
       unread messages
     </p>
-    <button className={`btn color-red btn-default`} onClick={()=>{selectAll()}} >
-      <i className={`fa fa-add`}></i>
-    </button>
-
+    <Switch>
+         <Route path="/compose" render={ () => (
+           <Link className="btn btn-danger" to="/">
+             <i className={`fa fa-plus`}></i>
+           </Link>
+         )} />
+         <Route render={ () => (
+           <Link className="btn btn-danger" to="/compose">
+             <i className={`fa fa-plus`}></i>
+           </Link>
+         )} />
+    </Switch>
     <button className={`btn btn-default`} onClick={()=>{selectAll()}} >
       <i className={`fa ${square}`}></i>
     </button>
