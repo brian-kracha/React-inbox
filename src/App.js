@@ -14,11 +14,9 @@ var read = false
 const localHost = 'http://localhost:8082'
 
 class App extends Component {
-  constructor(props){
-    super(props)
-    this.state =  {
+
+  state =  {
     messages:[]
-    }
   }
   async componentDidMount() {
     let info = await fetch(`${localHost}/api/messages`)
@@ -337,8 +335,8 @@ class App extends Component {
        />
       <Route
       path="/Compose"
-      render={() => (
-        <Compose createMessage={this.createMessage}/>
+      render={(props) => (
+        <Compose createMessage={this.createMessage} history={props.history}/>
         )}
       />
 

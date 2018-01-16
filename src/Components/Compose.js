@@ -1,12 +1,16 @@
 import React from 'react'
-const Compose= ({createMessage})=>{
+
+const Compose= ({createMessage,history})=>{
   const messageAdded =(event)=>{
     event.preventDefault()
     createMessage({
       subject: event.target.subject.value,
       body:event.target.body.value
     })
+    console.log(history)
+    history.push('/')
   }
+
   return(
     <form className="form-horizontal well" onSubmit={messageAdded}>
 
