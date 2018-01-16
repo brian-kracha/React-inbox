@@ -21,7 +21,7 @@ class App extends Component {
   async componentDidMount() {
     let info = await fetch(`${localHost}/api/messages`)
     let json = await info.json()
-    this.setState({messages: json._embedded.messages})
+    this.setState({messages: (json._embedded.messages).reverse()})
   }
 
   createMessage=async(message) =>{
@@ -37,7 +37,7 @@ class App extends Component {
         }
       })
         const newMessage = await response.json()
-            this.setState({messages:[...this.state.messages, newMessage]})
+            this.setState({messages:[newMessage,...this.state.messages]})
             }
 
     toggleRead= async (e)=>{
@@ -264,7 +264,7 @@ class App extends Component {
           array.push(message.id)
         message.labels.map(label=>{
           if(label ===e.target.value){
-            console.log('suhhhhhhh')
+
           message.labels.splice(message.labels.indexOf(label),1)
         }
         })}

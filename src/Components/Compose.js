@@ -7,7 +7,7 @@ const Compose= ({createMessage,history})=>{
       subject: event.target.subject.value,
       body:event.target.body.value
     })
-    console.log(history)
+
     history.push('/')
   }
 
