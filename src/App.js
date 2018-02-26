@@ -65,7 +65,6 @@ class App extends Component {
           }
         })
 
-
     }
 
 
@@ -310,7 +309,7 @@ class App extends Component {
        <span className="icon-bar"></span>
        <span className="icon-bar"></span>
      </button>
-     <a className="navbar-brand" href="/">Inbox Styleguide</a>
+     <a className="navbar-brand" href="/">React Message</a>
    </div>
    <div className="collapse navbar-collapse">
      <ul className="nav navbar-nav">
@@ -318,6 +317,7 @@ class App extends Component {
        <li><a href="/example">Example</a></li>
        <li><a href="/css">CSS</a></li>
          <li><a href="/seeds">Seeds</a></li>
+         <li> <form >search</form></li>
      </ul>
    </div>
  </div>

@@ -68,6 +68,7 @@ class Message extends Component {
   </div>
 </div>
 
-);}
+);
+}
 }
  export default Message
